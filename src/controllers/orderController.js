@@ -1,4 +1,6 @@
 const db = require("../config/db");
+const Order = require("../models/Order");
+const OrderItem = require("../models/OrderItem");
 
 const VALID_PAYMENT_METHODS = ["cash", "credit", "qr"];
 
@@ -53,11 +55,19 @@ exports.createOrder = async (req, res) => {
     });
   }
 
-  // คำนวณยอดรวมจากข้อมูลสินค้า
-  const totalAmount = items.reduce(
-    (sum, item) => sum + item.price * item.quantity,
-    0,
-  );
+  // สร้าง Order
+  const order = new Order(null, paymentMethod);
+
+  // สร้าง OrderItem และเพิ่มเข้า Order
+  for (const item of items) {
+    const orderItem = new OrderItem(
+      item.name.trim(),
+      item.price,
+      item.quantity,
+    );
+
+    order.addItem(orderItem);
+  }
 
   try {
     // บันทึก Order ลง MySQL
@@ -65,12 +75,14 @@ exports.createOrder = async (req, res) => {
       `INSERT INTO orders
             (payment_method, total_amount, created_at)
             VALUES (?, ?, NOW())`,
-      [paymentMethod, totalAmount],
+      [order.paymentMethod, order.totalAmount],
     );
 
+    order.orderId = result.insertId;
+
     return res.status(201).json({
-      orderId: result.insertId,
-      totalAmount,
+      orderId: order.orderId,
+      totalAmount: order.totalAmount,
     });
   } catch (error) {
     console.error("Create order error:", error);
