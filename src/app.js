@@ -1,26 +1,18 @@
 require("dotenv").config();
-
 const express = require("express");
 const app = express();
-
 app.use(express.json());
 
 const orderRoutes = require("./routes/orderRoutes");
+const menuRoutes = require("./routes/menuRoutes");
 app.use("/api/orders", orderRoutes);
+app.use("/api/menu", menuRoutes);
 
 const db = require("./config/db");
-
-db.getConnection()
-  .then((connection) => {
-    console.log("MySQL connected successfully");
-    connection.release();
-  })
-  .catch((error) => {
-    console.error("MySQL connection failed:", error.message);
-  });
+db.getConnection().then(connection => {
+  console.log("MySQL connected successfully");
+  connection.release();
+}).catch(error => console.error("MySQL connection failed:", error.message));
 
 const PORT = process.env.PORT || 3000;
-
-app.listen(PORT, () => {
-  console.log(`Cafe POS server running on port ${PORT}`);
-});
+app.listen(PORT, () => console.log(`Cafe POS server running on port ${PORT}`));
