@@ -1,5 +1,7 @@
 const menuModel = require("../models/menuModel");
 const orderModel = require("../models/orderModel");
+const Order = require("../models/Order");
+const OrderItem = require("../models/OrderItem");
 
 const VALID_PAYMENT_METHODS = ["cash", "credit", "qr"];
 
@@ -34,6 +36,13 @@ exports.createOrder = async (req, res) => {
         return res.status(400).json({ error: `สต็อกไม่เพียงพอสำหรับเมนู id ${menuId}` });
     }
 
+    // Domain class: คำนวณยอดรวมจากราคาใน DB (ไม่รับราคาจาก client)
+    const order = new Order(null, paymentMethod);
+    for (const item of items) {
+      const menu = menuMap.get(item.menuId);
+      order.addItem(new OrderItem(menu.name, Number(menu.price), item.quantity));
+    }
+
     const orderId = await orderModel.create(branchId, employeeId, paymentMethod);
 
     for (const item of items) {
@@ -49,7 +58,7 @@ exports.createOrder = async (req, res) => {
     }
     if (lowStockMenuIds.length) console.warn("สต็อกใกล้หมด menu_id:", lowStockMenuIds);
 
-    return res.status(201).json({ orderId, lowStockMenuIds });
+    return res.status(201).json({ orderId, totalAmount: order.totalAmount, lowStockMenuIds });
   } catch (err) {
     console.error(err);
     return res.status(500).json({ error: "เกิดข้อผิดพลาดในการบันทึกออเดอร์" });
