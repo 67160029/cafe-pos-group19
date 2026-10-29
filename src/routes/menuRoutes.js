@@ -1,9 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const menuController = require("../controllers/menuController");
+const { requireRole } = require("../middleware/auth");
+router.get("/categories", menuController.listCategories);
 router.get("/", menuController.listMenu);
 router.get("/:id", menuController.getMenuById);
-router.post("/", menuController.createMenu);
-router.put("/:id", menuController.updateMenu);
-router.delete("/:id", menuController.deleteMenu);
+router.post("/", requireRole("manager", "admin"), menuController.createMenu);
+router.patch("/:id", requireRole("manager", "admin"), menuController.updateMenu);
+router.delete("/:id", requireRole("manager", "admin"), menuController.deleteMenu);
 module.exports = router;

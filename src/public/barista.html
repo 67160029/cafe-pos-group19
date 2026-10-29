@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Qwerty café | คิวเครื่องดื่ม</title><link rel="stylesheet" href="/styles.css">
+  <script src="/barista.js" defer></script>
+</head>
+<body class="admin-page">
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="กลับหน้า POS"><span class="brand-mark">Q</span><span><strong>Qwerty café</strong><small>หน้าจอคิวบาริสต้า</small></span></a>
+    <div class="session-fields"><span id="barista-branch" class="eyebrow"></span><a class="button button-quiet" href="/">หน้า POS</a><button id="barista-logout" class="button button-quiet" type="button">ออกจากระบบ</button></div>
+  </header>
+  <main class="admin-layout">
+    <div class="page-heading"><div><p class="eyebrow">Barista / Kitchen Display</p><h1>คิวเครื่องดื่ม</h1></div><button id="queue-refresh" class="button button-quiet" type="button">↻ โหลดคิว</button></div>
+    <p id="queue-status" class="status" role="status" aria-live="polite"></p>
+    <div id="queue-grid" class="queue-grid"></div>
+  </main>
+</body>
+</html>
+
+

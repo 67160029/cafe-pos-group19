@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#10382f">
+  <title>Qwerty café | รายงานยอดขาย</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/reports.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="Qwerty café หน้ารับออเดอร์">
+      <span class="brand-mark" aria-hidden="true">Q</span>
+      <span><strong>Qwerty café</strong><small>รายงานยอดขาย</small></span>
+    </a>
+    <div class="session-fields">
+      <a class="button button-quiet" href="/">กลับหน้ารับออเดอร์</a>
+      <button id="logout" class="button button-quiet" type="button">ออกจากระบบ</button>
+    </div>
+  </header>
+  <main class="report-page">
+    <section aria-labelledby="report-title">
+      <p class="eyebrow">รายงาน / ยอดขายตามเมนู</p>
+      <h1 id="report-title">สรุปยอดขาย</h1>
+      <form id="report-filter" class="report-filter">
+        <label for="report-branch">สาขา</label>
+        <select id="report-branch" required></select>
+        <label for="report-from">ตั้งแต่</label><input id="report-from" type="date">
+        <label for="report-to">ถึง</label><input id="report-to" type="date">
+        <button class="button button-primary" type="submit">ดูรายงาน</button>
+      </form>
+      <div class="report-presets"><button id="preset-today" class="button button-quiet" type="button">วันนี้</button><button id="preset-week" class="button button-quiet" type="button">7 วันล่าสุด</button><button id="preset-month" class="button button-quiet" type="button">เดือนนี้</button></div>
+      <p id="report-status" class="status" role="status" aria-live="polite"></p>
+      <div class="report-summary" aria-label="สรุปยอดขาย">
+        <div><span>จำนวนขายรวม</span><strong id="total-quantity">0</strong></div>
+        <div><span>ยอดขายรวม</span><strong id="total-sales">฿0.00</strong></div>
+      </div>
+      <div class="report-table-wrap">
+        <table>
+          <thead><tr><th>รหัสเมนู</th><th>เมนู</th><th>จำนวนขาย</th><th>ยอดขาย</th></tr></thead>
+          <tbody id="report-rows"><tr><td colspan="4">เลือกสาขาเพื่อดูรายงาน</td></tr></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
+
+

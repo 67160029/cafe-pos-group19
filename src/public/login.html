@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#10382f">
+  <title>Qwerty café | เข้าสู่ระบบ</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/login.js" defer></script>
+</head>
+<body class="login-body">
+  <main class="login-card">
+    <a class="brand login-brand" href="/" aria-label="Qwerty café">
+      <span class="brand-mark" aria-hidden="true">Q</span>
+      <span><strong>Qwerty café</strong><small>ระบบรับออเดอร์</small></span>
+    </a>
+    <p class="eyebrow">สำหรับพนักงาน</p>
+    <h1>เข้าสู่ระบบ</h1>
+    <p class="login-intro">ใช้รหัสพนักงานและรหัสผ่านที่ผู้ดูแลตั้งค่าให้</p>
+    <form id="login-form">
+      <label for="login-employee">รหัสพนักงาน</label>
+      <input id="login-employee" name="employeeId" type="number" min="1" inputmode="numeric" autocomplete="username" required>
+      <label for="login-password">รหัสผ่าน</label>
+      <input id="login-password" name="password" type="password" autocomplete="current-password" required>
+      <p id="login-status" class="status" role="status" aria-live="polite"></p>
+      <button id="login-submit" class="button button-primary" type="submit">เข้าสู่ระบบ</button>
+    </form>
+  </main>
+</body>
+</html>
+
+

@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#10382f">
+  <title>Qwerty café | รับออเดอร์</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="Qwerty café หน้ารับออเดอร์">
+      <span class="brand-mark" aria-hidden="true">Q</span>
+      <span><strong>Qwerty café</strong><small>ระบบรับออเดอร์</small></span>
+    </a>
+    <div class="session-fields">
+      <a id="nav-report" class="button button-quiet role-nav" href="/reports.html" hidden>รายงานยอดขาย</a>
+      <a id="nav-menu" class="button button-quiet role-nav" href="/menu.html" hidden>จัดการเมนู</a>
+      <a id="nav-kds" class="button button-quiet role-nav" href="/barista.html" hidden>คิวบาริสต้า</a>
+      <a id="nav-admin" class="button button-quiet role-nav" href="/admin.html" hidden>จัดการระบบ</a>
+      <label>สาขา
+        <input id="branch-id" type="number" min="1" value="1" inputmode="numeric" aria-label="รหัสสาขา">
+      </label>
+      <label>พนักงาน
+        <input id="employee-id" type="number" min="1" value="1" inputmode="numeric" aria-label="รหัสพนักงาน">
+      </label>
+      <button id="logout" class="button button-quiet" type="button">ออกจากระบบ</button>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section class="catalog" aria-labelledby="page-title">
+      <div class="page-heading">
+        <div><p class="eyebrow">หน้าร้าน / ออเดอร์ใหม่</p><h1 id="page-title">เลือกเมนู</h1></div>
+        <button id="refresh-menu" class="button button-quiet" type="button">↻ <span>โหลดเมนูใหม่</span></button>
+      </div>
+      <p id="menu-status" class="status" role="status" aria-live="polite">กำลังโหลดเมนู…</p>
+      <nav id="menu-categories" class="category-filter" aria-label="กรองเมนูตามหมวดหมู่"></nav>
+      <div id="menu-grid" class="menu-grid" aria-label="รายการเมนู"></div>
+    </section>
+
+    <aside class="order-panel" aria-labelledby="order-title">
+      <div class="order-heading"><div><p class="eyebrow">ออเดอร์ปัจจุบัน</p><h2 id="order-title">รายการสั่งซื้อ</h2></div><span id="item-count" class="count-badge">0 รายการ</span></div>
+      <div id="cart-items" class="cart-items"><p class="empty-state">เลือกเมนูเพื่อเริ่มออเดอร์</p></div>
+      <div class="order-bottom">
+        <div class="total-row"><span>ยอดสุทธิ</span><strong id="order-total">฿0.00</strong></div>
+        <label class="payment-label" for="payment-method">วิธีชำระเงิน</label>
+        <select id="payment-method">
+          <option value="cash">เงินสด</option>
+          <option value="qr">QR พร้อมเพย์</option>
+          <option value="credit">บัตรเครดิต</option>
+        </select>
+        <p id="order-status" class="status order-status" role="status" aria-live="polite"></p>
+        <button id="submit-order" class="button button-primary" type="button" disabled>ยืนยันออเดอร์</button>
+      </div>
+    </aside>
+  </main>
+</body>
+</html>
+
+

@@ -2,23 +2,29 @@ const pool = require("../config/db");
 
 async function findAllByBranch(branchId) {
   const [rows] = await pool.query(
-    `SELECT menu_id, branch_id, category_id, name, price, stock_quantity
-     FROM menu_item WHERE branch_id = ?`, [branchId]);
+    `SELECT mi.menu_id, mi.branch_id, mi.category_id, c.name AS category_name,
+            mi.name, mi.price, mi.stock_quantity
+     FROM menu_item mi JOIN category c ON c.category_id = mi.category_id
+     WHERE mi.branch_id = ? ORDER BY c.name, mi.name`, [branchId]);
   return rows;
 }
 
 async function findByIdAndBranch(menuId, branchId) {
   const [rows] = await pool.query(
-    `SELECT menu_id, branch_id, category_id, name, price, stock_quantity
-     FROM menu_item WHERE menu_id = ? AND branch_id = ?`, [menuId, branchId]);
+    `SELECT mi.menu_id, mi.branch_id, mi.category_id, c.name AS category_name,
+            mi.name, mi.price, mi.stock_quantity
+     FROM menu_item mi JOIN category c ON c.category_id = mi.category_id
+     WHERE mi.menu_id = ? AND mi.branch_id = ?`, [menuId, branchId]);
   return rows[0];
 }
 
-async function findManyForStockCheck(menuIds, branchId) {
+async function findManyForStockCheck(menuIds, branchId, executor = pool, lockForUpdate = false) {
   if (!menuIds.length) return [];
-  const [rows] = await pool.query(
+  const ids = [...menuIds].sort((a, b) => a - b);
+  const lockClause = lockForUpdate ? " ORDER BY menu_id FOR UPDATE" : "";
+  const [rows] = await executor.query(
     `SELECT menu_id, branch_id, category_id, name, price, stock_quantity
-     FROM menu_item WHERE menu_id IN (?) AND branch_id = ?`, [menuIds, branchId]);
+     FROM menu_item WHERE menu_id IN (?) AND branch_id = ?${lockClause}`, [ids, branchId]);
   return rows;
 }
 
@@ -45,10 +51,11 @@ async function remove(menuId, branchId) {
   return result.affectedRows;
 }
 
-async function deductStock(menuId, quantity, branchId) {
-  const [result] = await pool.query(
+async function deductStock(menuId, quantity, branchId, executor = pool) {
+  const [result] = await executor.query(
     `UPDATE menu_item SET stock_quantity = stock_quantity - ?
-     WHERE menu_id = ? AND branch_id = ?`, [quantity, menuId, branchId]);
+     WHERE menu_id = ? AND branch_id = ? AND stock_quantity >= ?`,
+    [quantity, menuId, branchId, quantity]);
   return result.affectedRows;
 }
 

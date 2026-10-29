@@ -1,0 +1,12 @@
+<!doctype html>
+<html lang="th">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Qwerty café | จัดการเมนู</title><link rel="stylesheet" href="/styles.css"><script src="/menu.js" defer></script></head>
+<body class="admin-page">
+  <header class="topbar"><a class="brand" href="/"><span class="brand-mark">Q</span><span><strong>Qwerty café</strong><small>จัดการเมนูและสต็อก</small></span></a><div class="session-fields"><label>สาขา<select id="manage-branch"></select></label><a class="button button-quiet" href="/">หน้า POS</a><button id="menu-logout" class="button button-quiet" type="button">ออกจากระบบ</button></div></header>
+  <main class="admin-layout"><div class="page-heading"><div><p class="eyebrow">Manager / Menu & Stock</p><h1>เมนูและสต็อกสินค้า</h1></div></div><div id="menu-manage-kpis" class="manage-kpis"></div><p id="manage-status" class="status" role="status" aria-live="polite"></p>
+    <section class="admin-card"><h2>เพิ่มเมนู</h2><form id="new-menu-form" class="admin-form menu-form"><label>ชื่อเมนู<input id="new-name" maxlength="100" required></label><label>หมวดหมู่<select id="new-category" required></select></label><label>ราคา<input id="new-price" type="number" min="0.01" max="99999999.99" step="0.01" required></label><label>สต็อกเริ่มต้น<input id="new-stock" type="number" min="0" step="1" value="0" required></label><button class="button button-primary" type="submit">เพิ่มเมนู</button></form></section>
+    <section class="admin-card"><h2>รายการเมนู</h2><div class="report-table-wrap"><table><thead><tr><th>เมนู</th><th>หมวด</th><th>ราคา</th><th>สต็อก</th><th>จัดการ</th></tr></thead><tbody id="menu-manage-rows"></tbody></table></div></section>
+  </main>
+</body></html>
+
+

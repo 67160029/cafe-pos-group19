@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Qwerty café | ศูนย์จัดการ</title><link rel="stylesheet" href="/styles.css">
+  <script src="/admin.js" defer></script>
+</head>
+<body class="admin-page">
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="กลับหน้า POS"><span class="brand-mark">Q</span><span><strong>Qwerty café</strong><small>ศูนย์จัดการระบบ</small></span></a>
+    <div class="session-fields"><a class="button button-quiet" href="/">หน้า POS</a><button id="admin-logout" class="button button-quiet" type="button">ออกจากระบบ</button></div>
+  </header>
+  <main class="admin-layout">
+    <div class="page-heading"><div><p class="eyebrow">สำนักงานใหญ่ / ผู้ดูแลระบบ</p><h1>จัดการพนักงานและสาขา</h1></div></div>
+    <p id="admin-status" class="status" role="status" aria-live="polite"></p>
+    <section class="admin-card" aria-labelledby="staff-title">
+      <div class="admin-section-heading"><div><p class="eyebrow">Staff management</p><h2 id="staff-title">พนักงาน</h2></div></div>
+      <form id="staff-form" class="admin-form">
+        <label>ชื่อพนักงาน<input id="staff-name" maxlength="100" required></label>
+        <label>สาขา<select id="staff-branch" required></select></label>
+        <label>บทบาท<select id="staff-role"><option value="cashier">Cashier</option><option value="barista">Barista</option></select></label>
+        <label>รหัสผ่านเริ่มต้น<input id="staff-password" type="password" minlength="12" maxlength="256" autocomplete="new-password" required></label>
+        <button class="button button-primary" type="submit">เพิ่มพนักงาน</button>
+      </form>
+      <div class="report-table-wrap"><table><thead><tr><th>ID</th><th>ชื่อ</th><th>บทบาท</th><th>สาขา</th><th>เข้าสู่ระบบ</th><th>จัดการ</th></tr></thead><tbody id="staff-rows"></tbody></table></div>
+    </section>
+    <section class="admin-card" aria-labelledby="branch-title">
+      <div class="admin-section-heading"><div><p class="eyebrow">Branch network</p><h2 id="branch-title">สาขา</h2></div></div>
+      <form id="branch-form" class="admin-form branch-form">
+        <label>ชื่อสาขา<input id="branch-name" maxlength="100" required></label>
+        <label>ที่อยู่<input id="branch-address" maxlength="255"></label>
+        <button class="button button-primary" type="submit">เพิ่มสาขา</button>
+      </form>
+      <div class="report-table-wrap"><table><thead><tr><th>ID</th><th>ชื่อสาขา</th><th>ที่อยู่</th><th>พนักงาน</th><th>เมนู</th><th>จัดการ</th></tr></thead><tbody id="branch-rows"></tbody></table></div>
+    </section>
+  </main>
+</body>
+</html>
+
+
